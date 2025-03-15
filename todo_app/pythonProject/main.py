@@ -21,7 +21,7 @@ while True:
             file.close()
 
             for i, j in enumerate(todos):
-                print(f'{i + 1}. {j}', end='')
+                print(f'{i + 1}. {j.strip('\n')}')
 
         case 'edit':
             todo_to_edit = int(input('What number todo do you want to edit? '))

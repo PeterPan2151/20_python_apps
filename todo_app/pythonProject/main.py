@@ -42,5 +42,6 @@ while True:
 
             with open('todos.txt', 'w') as file:
                 file.writelines(todos)
+
         case 'exit':
             break

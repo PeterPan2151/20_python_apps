@@ -1,47 +1,48 @@
 while True:
     user_text = input('Type add, edit, complete or show: ').strip()
-    
-    match user_text:
-        case 'add':
-            todo = input('Enter a todo: ') + '\n'
 
-            with open('todos.txt', 'r') as file:
-                todos = file.readlines()
+    if 'add' in user_text:
+        todo = user_text[4:] + '\n'
 
-            todos.append(todo)
+        with open('todos.txt', 'r') as file:
+            todos = file.readlines()
 
-            with open('todos.txt', 'w') as file:
-                file.writelines(todos)
+        todos.append(todo)
 
-        case 'show':
-            with open('todos.txt', 'r') as file:
-                todos = file.readlines()
+        with open('todos.txt', 'w') as file:
+            file.writelines(todos)
 
-            for i, j in enumerate(todos):
-                print(f'{i + 1}. {j.strip('\n')}')
+    elif 'show' in user_text:
+        with open('todos.txt', 'r') as file:
+            todos = file.readlines()
 
-        case 'edit':
-            todo_to_edit = int(input('What number todo do you want to edit? ')) - 1
+        for i, j in enumerate(todos):
+            print(f'{i + 1}. {j.strip('\n')}')
 
-            with open('todos.txt', 'r') as file:
-                todos = file.readlines()
+    elif 'edit' in user_text:
+        todo_to_edit = int(user_text[5:]) - 1
 
-            new_todo = input('Enter new todo: ')
-            todos[todo_to_edit] = new_todo + '\n'
+        with open('todos.txt', 'r') as file:
+            todos = file.readlines()
 
-            with open('todos.txt', 'w') as file:
-                file.writelines(todos)
+        new_todo = input('Enter new todo: ')
+        todos[todo_to_edit] = new_todo + '\n'
 
-        case 'complete':
-            completed_todo = int(input('What number todo have you completed? ')) - 1
+        with open('todos.txt', 'w') as file:
+            file.writelines(todos)
 
-            with open('todos.txt', 'r') as file:
-                todos = file.readlines()
+    elif 'complete' in user_text:
+        completed_todo = int(user_text[9:]) - 1
 
-            todos.pop(completed_todo)
+        with open('todos.txt', 'r') as file:
+            todos = file.readlines()
 
-            with open('todos.txt', 'w') as file:
-                file.writelines(todos)
+        todos.pop(completed_todo)
 
-        case 'exit':
-            break
+        with open('todos.txt', 'w') as file:
+            file.writelines(todos)
+
+    elif 'exit' in user_text:
+        break
+    else:
+        print('Command is not valid.')

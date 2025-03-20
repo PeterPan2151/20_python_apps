@@ -1,7 +1,12 @@
-def get_todos():
-    with open('todos.txt', 'r') as file:
+def get_todos(filepath):
+    with open(filepath, 'r') as file:
         todos_local = file.readlines()
-    return todos
+    return todos_local
+
+
+def write_todos(filepath, todos_local):
+    with open(filepath, 'w') as file:
+        file.writelines(todos_local)
 
 
 while True:
@@ -10,15 +15,14 @@ while True:
     if user_text.startswith('add'):
         todo = user_text[4:] + '\n'
 
-        todos = get_todos()
+        todos = get_todos('todos.txt')
 
         todos.append(todo)
 
-        with open('todos.txt', 'w') as file:
-            file.writelines(todos)
+        write_todos('todos.txt', todos)
 
     elif user_text.startswith('show'):
-        todos = get_todos()
+        todos = get_todos('todos.txt')
 
         for i, j in enumerate(todos):
             print(f'{i + 1}. {j.strip('\n')}')
@@ -27,13 +31,12 @@ while True:
         try:
             todo_to_edit = int(user_text[5:]) - 1
 
-            todos = get_todos()
+            todos = get_todos('todos.txt')
 
             new_todo = input('Enter new todo: ')
             todos[todo_to_edit] = new_todo + '\n'
 
-            with open('todos.txt', 'w') as file:
-                file.writelines(todos)
+            write_todos('todos.txt', todos)
 
         except ValueError:
             print('Your command is not valid.')
@@ -43,12 +46,11 @@ while True:
         try:
             completed_todo = int(user_text[9:]) - 1
 
-            todos = get_todos()
+            todos = get_todos('todos.txt')
 
             todos.pop(completed_todo)
 
-            with open('todos.txt', 'w') as file:
-                file.writelines(todos)
+            write_todos('todos.txt', todos)
 
         except IndexError:
             print('That item is out of range.')
